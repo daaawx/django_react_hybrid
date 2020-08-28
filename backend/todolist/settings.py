@@ -110,3 +110,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
+STATIC_URL = '/static/'
+
+BACKEND_DIR = BASE_DIR
+FRONTEND_DIR = os.path.abspath(
+    os.path.join(BACKEND_DIR, '..', 'frontend')
+)
+
+DEBUG = os.environ.get('DJANGO_ENV') == 'development'
+ALLOWED_HOSTS = ['*']
