@@ -14,6 +14,10 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+BACKEND_DIR = BASE_DIR
+FRONTEND_DIR = os.path.abspath(
+    os.path.join(BACKEND_DIR, '..', 'frontend')
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -22,9 +26,8 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = '#a*!vk6yui=gan^tryl&9x#vsw-6zy9_ladl%u*ep)y$#geb-('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+DEBUG = os.environ.get('DJANGO_ENV') == 'development'
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -52,7 +55,9 @@ ROOT_URLCONF = 'todolist.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(FRONTEND_DIR, 'build'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -111,11 +116,3 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 STATIC_URL = '/static/'
-
-BACKEND_DIR = BASE_DIR
-FRONTEND_DIR = os.path.abspath(
-    os.path.join(BACKEND_DIR, '..', 'frontend')
-)
-
-DEBUG = os.environ.get('DJANGO_ENV') == 'development'
-ALLOWED_HOSTS = ['*']
