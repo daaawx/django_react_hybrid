@@ -11,13 +11,18 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+ROOT_DIR = (environ.Path(__file__) - 3)
 BACKEND_DIR = BASE_DIR
 FRONTEND_DIR = os.path.abspath(
     os.path.join(BACKEND_DIR, '..', 'frontend')
 )
+
+env = environ.Env()
+env.read_env(str(ROOT_DIR.path(".env")))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -26,7 +31,7 @@ FRONTEND_DIR = os.path.abspath(
 SECRET_KEY = '#a*!vk6yui=gan^tryl&9x#vsw-6zy9_ladl%u*ep)y$#geb-('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_ENV') == 'development'
+DEBUG = env.bool('DJANGO_DEBUG')
 ALLOWED_HOSTS = ['*']
 
 # Application definition
